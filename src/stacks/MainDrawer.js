@@ -1,11 +1,11 @@
 import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
-import Home from './pages/Home';
-import Menu from './components/Menu';
-import Perfil from './pages/Perfil';
-import Ranking from './pages/Ranking';
-import PostDetail from './pages/PostDetail';
+import Home from '../pages/Home';
+// import Menu from '../components/Menu';
+import Perfil from '../pages/Perfil';
+import Ranking from '../pages/Ranking';
+import PostDetail from '../pages/PostDetail';
 
 const Drawer = createDrawerNavigator();
 

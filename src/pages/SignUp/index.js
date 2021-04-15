@@ -16,21 +16,21 @@ import Field from '../../components/Field';
 import StudiumLogo from '../../assets/logo.png';
 
 
-export default function Login() {
+export default function SingUp() {
 
+    const [emailField, setEmailField] = useState('');
     const [usernameField, setUsernameField] = useState('');
     const [passwordField, setPasswordField] = useState('');
 
     const navigation = useNavigation();
 
     function handleLoginButtonClick() {
-        console.log("[NAVEGAÇÃO]"+"Navegando para Home");
-        navigation.navigate('Home');
+        console.log("[NAVEGAÇÃO]"+"Navegando para SignUp");
+        navigation.navigate("Login")
     }
     
     function handleSignUpButtonClick() {
-        console.log("[NAVEGAÇÃO]"+"Navegando para SignUp");
-        navigation.navigate('SignUp')
+        
     }
 
     return(
@@ -38,6 +38,12 @@ export default function Login() {
             <Logo source={StudiumLogo} />
 
             <InputArea>
+                <Field 
+                    iconName={"mail"} 
+                    placeholder="Digite seu email"
+                    value={emailField}
+                    onChangeText={t=>setEmailField(t)}
+                />
                 <Field 
                     iconName={"user"} 
                     placeholder="Digite seu nome de usuário"
@@ -52,14 +58,14 @@ export default function Login() {
                     password={true}
                 />
                 
-                <CustomButton onPress={handleLoginButtonClick}>
-                    <CustomButtonText>LOGIN</CustomButtonText>
+                <CustomButton onPress={handleSignUpButtonClick}>
+                    <CustomButtonText>CADASTRAR</CustomButtonText>
                 </CustomButton>
             </InputArea>
 
-            <SignMessageButton onPress={handleSignUpButtonClick}>
-                <SignMessageButtonText>Ainda não possui uma conta?</SignMessageButtonText>
-                <SignMessageButtonTextBold>Cadastre-se</SignMessageButtonTextBold>
+            <SignMessageButton onPress={handleLoginButtonClick}>
+                <SignMessageButtonText>Já possui uma conta?</SignMessageButtonText>
+                <SignMessageButtonTextBold>Faça login</SignMessageButtonTextBold>
             </SignMessageButton>
 
 
