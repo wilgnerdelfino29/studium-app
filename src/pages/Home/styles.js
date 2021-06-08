@@ -28,7 +28,7 @@ export default StyleSheet.create({
         color: '#FFF',
         fontWeight: 'bold',
     },
-    goBackButton: {
+    logoffButton: {
         position: 'absolute',
         left: 10,
     },

@@ -10,12 +10,14 @@ export const Container = styled.SafeAreaView`
 
 export const Logo = styled.Image`
     width: 50%;
-    height: 120px;
+    height: 220px;
+    max-width: 220px;
 `;
 
 export const InputArea = styled.View`
     padding: 20px;
     width: 100%;
+    align-items: center;
 `;
 
 export const CustomButton = styled.TouchableOpacity`
@@ -24,6 +26,8 @@ export const CustomButton = styled.TouchableOpacity`
     border-radius: 30px;
     align-items: center;
     justify-content: center;
+    width: 100%;
+    max-width: 400px;
 `;
 
 export const CustomButtonText = styled.Text`
@@ -31,6 +35,11 @@ export const CustomButtonText = styled.Text`
     color: #FFF;
     font-weight: bold;
 `;
+
+export const StatusField = styled.Text`
+    color: ${props => props.error ? '#BB0000' : '#000'};
+    font-weight: ${props => props.error ? 'bold' : 'normal'};
+`
 
 export const SignMessageButton = styled.TouchableOpacity`
     flex-direction: row;

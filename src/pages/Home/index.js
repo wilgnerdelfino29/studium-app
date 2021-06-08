@@ -11,6 +11,7 @@ import { useNavigation } from '@react-navigation/native';
 import defaultPostImage from '../../assets/postImageExample.jpg';
 
 import styles from './styles';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default function Home() {
 
@@ -29,6 +30,12 @@ export default function Home() {
     return (
         <View style={styles.container}>
             <View style={styles.header}>
+                {/*
+                 Logout temporário
+                */}
+                <TouchableOpacity onPress={()=>{ AsyncStorage.clear(); navigation.navigate('Preload')}} style={styles.logoffButton}>
+                    <MaterialIcons name="exit-to-app" style={styles.headerIcon} />
+                </TouchableOpacity>
 
                 <Text style={styles.headerText}>
                     Studium

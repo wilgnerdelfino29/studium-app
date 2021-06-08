@@ -25,7 +25,7 @@ export default function SingUp() {
     const navigation = useNavigation();
 
     function handleLoginButtonClick() {
-        console.log("[NAVEGAÇÃO]"+"Navegando para SignUp");
+        console.log("[NAVEGAÇÃO]"+"Navegando para Login");
         navigation.navigate("Login")
     }
     

@@ -4,6 +4,7 @@ import { AntDesign } from '@expo/vector-icons';
 
 const InputArea = styled.View`
   width: 100%;
+  max-width: 400px;
   height: 60px;
   padding-left: 15px;
   margin-bottom: 15px;

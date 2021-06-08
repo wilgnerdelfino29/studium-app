@@ -5,15 +5,15 @@ import { useNavigation } from '@react-navigation/native';
 
 import StudiumLogo from '../../assets/logo.png';
 
-export default () => {
+export default function Preload() {
 
     const navigation = useNavigation();
 
     useEffect(()=>{
         const checkToken = async () => {
-            const token = await AsyncStorage.getItem('token');
+            const token = await AsyncStorage.getItem('@studium-token');
             if (token) {
-                //validar o token
+                navigation.navigate('MainDrawer')
             } else {
                 navigation.reset({
                     routes: [{name: 'Login'}]
