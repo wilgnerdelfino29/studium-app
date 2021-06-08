@@ -25,7 +25,7 @@ export default function Login() {
 
     function handleLoginButtonClick() {
         console.log("[NAVEGAÇÃO]"+"Navegando para Home");
-        navigation.navigate('Home');
+        navigation.navigate('MainDrawer');
     }
     
     function handleSignUpButtonClick() {
