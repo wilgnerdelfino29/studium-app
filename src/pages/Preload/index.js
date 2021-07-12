@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react';
-import { Container, Logo, LoadingIcon } from './styles';
 import AsyncStorage from '@react-native-community/async-storage';
 import { useNavigation } from '@react-navigation/native';
+
+import { Container } from '../../styles/globalStyle';
+import { Logo, LoadingIcon } from './styles';
 
 import StudiumLogo from '../../assets/logo.png';
 
@@ -24,7 +26,7 @@ export default () => {
     }, [])
 
     return (
-        <Container>
+        <Container center={true}>
             <Logo source={StudiumLogo} />
             <LoadingIcon size="large" color="#000000"/>
         </Container>

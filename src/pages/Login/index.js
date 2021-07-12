@@ -1,16 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 
-import { 
-    Container,
-    InputArea,
-    Logo,
-    CustomButton,
-    CustomButtonText,
-    SignMessageButton,
-    SignMessageButtonText,
-    SignMessageButtonTextBold
-} from './styles';
+import { Container, InputArea, CustomButton, CustomButtonText } from '../../styles/globalStyle';
+import { Logo, SignMessageButton, SignMessageButtonText, SignMessageButtonTextBold } from './styles';
 
 import Field from '../../components/Field';
 import StudiumLogo from '../../assets/logo.png';
@@ -34,9 +26,8 @@ export default function Login() {
     }
 
     return(
-        <Container>
+        <Container center={true}>
             <Logo source={StudiumLogo} />
-
             <InputArea>
                 <Field 
                     iconName={"user"} 
@@ -51,19 +42,14 @@ export default function Login() {
                     onChangeText={t=>setPasswordField(t)}
                     password={true}
                 />
-                
                 <CustomButton onPress={handleLoginButtonClick}>
                     <CustomButtonText>LOGIN</CustomButtonText>
                 </CustomButton>
             </InputArea>
-
             <SignMessageButton onPress={handleSignUpButtonClick}>
                 <SignMessageButtonText>Ainda não possui uma conta?</SignMessageButtonText>
                 <SignMessageButtonTextBold>Cadastre-se</SignMessageButtonTextBold>
             </SignMessageButton>
-
-
-
         </Container>
     )
 }

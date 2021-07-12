@@ -1,16 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 
-import { 
-    Container,
-    InputArea,
-    Logo,
-    CustomButton,
-    CustomButtonText,
-    SignMessageButton,
-    SignMessageButtonText,
-    SignMessageButtonTextBold
-} from './styles';
+import { Container, InputArea, CustomButton, CustomButtonText } from '../../styles/globalStyle';
+import { Logo, SignMessageButton, SignMessageButtonText, SignMessageButtonTextBold } from './styles';
 
 import Field from '../../components/Field';
 import StudiumLogo from '../../assets/logo.png';
@@ -34,7 +26,7 @@ export default function SingUp() {
     }
 
     return(
-        <Container>
+        <Container center={true}>
             <Logo source={StudiumLogo} />
 
             <InputArea>
