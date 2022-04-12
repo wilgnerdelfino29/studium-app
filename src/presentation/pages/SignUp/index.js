@@ -34,7 +34,7 @@ export default function SignUp({ navigation }) {
   const [isEmailFieldValid, setEmailFieldValidation] = useState(true);
 
   const handleLoginButtonClick = () => {
-    console.log('[NAVEGAÇÃO]' + 'Navegando para SignUp');
+    console.log('[NAVEGAÇÃO]' + 'Navegando para Login');
     navigation.navigate('Login');
   };
 
