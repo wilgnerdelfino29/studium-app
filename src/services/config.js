@@ -1,10 +1,17 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const baseURL = (username, password) =>
-  username === null || password === null
-    ? 'https://studiumapp.herokuapp.com/'
-    : 'https://' + username + ':' + password + '@studiumapp.herokuapp.com/';
+const baseURL = (username, password) => {
+  const _baseUrl =
+    username === null ||
+    password === null ||
+    username === undefined ||
+    password === undefined
+      ? 'https://studiumapp.herokuapp.com/'
+      : 'https://' + username + ':' + password + '@studiumapp.herokuapp.com/';
+  console.log('baseUrl = ' + _baseUrl);
+  return _baseUrl;
+};
 
 export const loggedAxios = async () => {
   const username = await AsyncStorage.getItem('username');
