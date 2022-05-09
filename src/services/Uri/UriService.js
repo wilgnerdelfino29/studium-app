@@ -13,13 +13,13 @@ export const validateUri = async (uri) => {
     .get('')
     .then(function (response) {
       // handle success
-      console.log('validateUri success');
+      // console.log('validateUri success for: ' + uri);
       hasSuccess = true;
     })
     .catch(function (error) {
       // handle error
-      console.log('validateUri error');
-      console.log(error);
+      // console.log('validateUri error');
+      // console.log(error);
     });
 
   return hasSuccess;

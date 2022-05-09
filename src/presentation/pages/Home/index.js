@@ -21,9 +21,8 @@ export default function Home({ route, navigation }) {
 
     async function getPostsRemotely() {
       const hasSuccess = await getPosts();
-      console.log('hasSuccess = ' + hasSuccess);
       if (hasSuccess) {
-        _posts = hasSuccess.data.posts;
+        _posts = hasSuccess.data;
         validatePosts();
       }
     }
