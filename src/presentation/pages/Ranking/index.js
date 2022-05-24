@@ -1,8 +1,13 @@
 import React from 'react';
-import { View } from 'react-native';
+import { Text } from 'react-native';
+import RouteNames from '../../../navigation/RouteNames';
+import { Container } from '../../../styles/globalStyle';
 
 export default function Ranking() {
-    return (
-        <View />
-    )
+  console.log(RouteNames.RANKING);
+  return (
+    <Container>
+      <Text>RouteNames.RANKING</Text>
+    </Container>
+  );
 }
