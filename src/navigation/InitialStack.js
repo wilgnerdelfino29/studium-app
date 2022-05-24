@@ -7,22 +7,24 @@ import {
 import Preload from '../presentation/pages/Preload';
 import Login from '../presentation/pages/Login';
 import SignUp from '../presentation/pages/SignUp';
+import HomeStack from './HomeStack';
 import MainDrawer from './MainDrawer';
+import RouteNames from './RouteNames';
 
 const Stack = createStackNavigator();
 
 export default () => (
   <Stack.Navigator
-    initialRouteName="Preload"
+    initialRouteName={RouteNames.PRELOAD}
     screenOptions={{
       headerShown: false,
       cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
     }}
   >
-    <Stack.Screen name="Preload" component={Preload} />
-    <Stack.Screen name="Login" component={Login} />
-    <Stack.Screen name="SignUp" component={SignUp} />
-    <Stack.Screen name="MainDrawer" component={MainDrawer} />
-    {/* <Stack.Screen name="Menu" component={Menu} /> */}
+    <Stack.Screen name={RouteNames.PRELOAD} component={Preload} />
+    <Stack.Screen name={RouteNames.LOGIN} component={Login} />
+    <Stack.Screen name={RouteNames.SIGNUP} component={SignUp} />
+    {/* TO FIX: Temporally going to HomeStack to avoid Drawer problem */}
+    <Stack.Screen name={RouteNames.MAIN_DRAWER} component={HomeStack} />
   </Stack.Navigator>
 );
