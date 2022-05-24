@@ -2,7 +2,6 @@ import { loggedAxios } from '../config';
 
 export const getPosts = async () => {
   let hasSuccess = false;
-  console.log('batendo no endpoint /posts/');
 
   await loggedAxios()
     .then(async function (axios) {

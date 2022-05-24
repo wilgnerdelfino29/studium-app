@@ -3,7 +3,7 @@ import axios from 'axios';
 const uriServiceAxios = (url) =>
   axios.create({
     baseURL: url,
-    timeout: 15000,
+    timeout: 2000,
   });
 
 export const validateUri = async (uri) => {
@@ -13,13 +13,13 @@ export const validateUri = async (uri) => {
     .get('')
     .then(function (response) {
       // handle success
-      // console.log('validateUri success for: ' + uri);
+      console.log('validateUri success');
       hasSuccess = true;
     })
     .catch(function (error) {
       // handle error
-      // console.log('validateUri error');
-      // console.log(error);
+      console.log('validateUri error');
+      console.log(error);
     });
 
   return hasSuccess;
