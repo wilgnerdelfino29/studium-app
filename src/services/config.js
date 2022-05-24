@@ -1,16 +1,20 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+const API_URL = 'studiumapp.herokuapp.com/';
+
 const baseURL = (username, password) => {
-  const _baseUrl =
-    username === null ||
-    password === null ||
-    username === undefined ||
-    password === undefined
-      ? 'https://studiumapp.herokuapp.com/'
-      : 'https://' + username + ':' + password + '@studiumapp.herokuapp.com/';
-  console.log('baseUrl = ' + _baseUrl);
-  return _baseUrl;
+  const hasUsernameAndPassword =
+    username !== null &&
+    username !== undefined &&
+    password !== null &&
+    password !== undefined;
+
+  if (hasUsernameAndPassword) {
+    return 'https://' + username + ':' + password + '@' + API_URL;
+  }
+
+  return 'https://' + API_URL;
 };
 
 export const loggedAxios = async () => {
