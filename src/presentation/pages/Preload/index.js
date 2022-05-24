@@ -5,22 +5,26 @@ import { Container } from '../../../styles/globalStyle';
 import { Logo, LoadingIcon } from './styles';
 
 import StudiumLogo from '../../../assets/logo.png';
+import RouteNames from '../../../navigation/RouteNames';
 
 export default function Preload({ navigation }) {
   useEffect(() => {
-    const checkToken = async () => {
-      const token = await AsyncStorage.getItem('token');
-      if (token) {
-        navigation.reset({
-          routes: [{ name: 'MainDrawer' }],
+    const checkUserInfo = async () => {
+      await AsyncStorage.multiGet(['username', 'password'])
+        .then((response) => {
+          console.log('user info found');
+          navigation.reset({
+            routes: [{ name: RouteNames.MAIN_DRAWER }],
+          });
+        })
+        .catch((error) => {
+          console.log('user info not found');
+          navigation.reset({
+            routes: [{ name: RouteNames.LOGIN }],
+          });
         });
-      } else {
-        navigation.reset({
-          routes: [{ name: 'Login' }],
-        });
-      }
     };
-    checkToken();
+    checkUserInfo();
   }, []);
 
   return (
