@@ -22,6 +22,9 @@ import {
   SignMessageButtonTextBold,
 } from './styles';
 
+//others
+import RouteNames from '../../../navigation/RouteNames';
+
 export default function Login({ navigation }) {
   const [usernameField, setUsernameField] = useState('');
   const [passwordField, setPasswordField] = useState('');
@@ -49,28 +52,23 @@ export default function Login({ navigation }) {
       return;
     }
     const hasSuccess = await login(usernameField, passwordField);
-    console.log('hasSuccess: ' + hasSuccess);
     if (hasSuccess) {
       console.log(
-        '[NAVEGAÇÃO]' + 'Navegando para Home, com o parâmetro: posts'
+        '[NAVEGAÇÃO] Navegando para ' +
+          RouteNames.HOME +
+          ', com o parâmetro posts:'
       );
-      navigation.navigate(
-        'MainDrawer',
-        { posts: hasSuccess.data },
-        {
-          type: 'Navigate',
-          routeName: 'Home',
-          params: {
-            posts: hasSuccess.data,
-          },
-        }
-      );
+      console.log(hasSuccess.data);
+
+      navigation.navigate(RouteNames.MAIN_DRAWER, {
+        posts: hasSuccess.data,
+      });
     }
   };
 
   const handleSignUpButtonClick = () => {
-    console.log('[NAVEGAÇÃO]' + 'Navegando para SignUp');
-    navigation.navigate('SignUp');
+    console.log('[NAVEGAÇÃO] Navegando para ' + RouteNames.SIGNUP);
+    navigation.navigate(RouteNames.SIGNUP);
   };
 
   return (

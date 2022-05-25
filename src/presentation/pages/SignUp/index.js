@@ -23,6 +23,7 @@ import {
 
 //others
 import StudiumLogo from '../../../assets/logo.png';
+import RouteNames from '../../../navigation/RouteNames';
 
 export default function SignUp({ navigation }) {
   const [emailField, setEmailField] = useState('');
@@ -34,8 +35,8 @@ export default function SignUp({ navigation }) {
   const [isEmailFieldValid, setEmailFieldValidation] = useState(true);
 
   const handleLoginButtonClick = () => {
-    console.log('[NAVEGAÇÃO]' + 'Navegando para Login');
-    navigation.navigate('Login');
+    console.log('[NAVEGAÇÃO] Navegando para ' + RouteNames.LOGIN);
+    navigation.navigate(RouteNames.LOGIN);
   };
 
   const fieldsAreValids = () => {
@@ -68,8 +69,8 @@ export default function SignUp({ navigation }) {
     );
     console.log('hasSuccess: ' + hasSuccess);
     if (hasSuccess) {
-      console.log('[NAVEGAÇÃO]' + 'Navegando para Home');
-      navigation.navigate('MainDrawer');
+      console.log('[NAVEGAÇÃO] Navegando para ' + RouteNames.HOME);
+      navigation.navigate(RouteNames.MAIN_DRAWER);
     }
   };
 
