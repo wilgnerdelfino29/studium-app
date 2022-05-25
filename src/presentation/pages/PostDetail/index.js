@@ -73,7 +73,7 @@ export default function PostDetail({ navigation }) {
 
       <ScrollView>
         <PostImage source={defaultPostImage} />
-        <PostTags tags={'Mobile, React native, Android, IOS'} />
+        <PostTags />
         <PostDetailsContainer>
           {/* autor */}
           <UserSimpleCard

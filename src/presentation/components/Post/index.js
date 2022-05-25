@@ -12,6 +12,8 @@ import { Post, Padding } from './styles';
 import { toPostCreationDateFormat } from '../../constants/StringFormat/index';
 
 export default ({ data }) => {
+  const tags = data.categories;
+  const hasTags = tags.length > 0;
   return (
     <Post>
       <Padding>
@@ -21,7 +23,7 @@ export default ({ data }) => {
         />
       </Padding>
       <PostImage source={data.images} isUri={true} />
-      <PostTags tags={'Mobile, React native, Android'} />
+      {hasTags && <PostTags tags={tags.join(', ')} />}
     </Post>
   );
 };
