@@ -25,3 +25,7 @@ export const CustomButtonText = styled.Text`
   color: white;
   font-weight: bold;
 `;
+
+export const LoadingIcon = styled.ActivityIndicator`
+  margin-top: 50px;
+`;

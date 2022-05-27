@@ -70,7 +70,7 @@ export default function SignUp({ navigation }) {
     console.log('hasSuccess: ' + hasSuccess);
     if (hasSuccess) {
       console.log('[NAVEGAÇÃO] Navegando para ' + RouteNames.HOME);
-      navigation.navigate(RouteNames.MAIN_DRAWER);
+      navigation.dispatch(StackActions.replace(RouteNames.MAIN_DRAWER));
     }
   };
 

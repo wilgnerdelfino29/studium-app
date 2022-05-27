@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, TouchableOpacity, View, StatusBar } from 'react-native';
+import { StackActions } from '@react-navigation/native';
 
 //services
 import { validateUri } from '../../../services/Uri/UriService';
 import { getPosts } from '../../../services/Post/PostService';
+import { logout } from '../../../services/Auth/AuthService';
 
 //components
 import Header from '../../components/Header';
@@ -11,15 +13,15 @@ import Post from '../../components/Post';
 import Divider from '../../components/Divider';
 
 //styles
-import { Container } from '../../../styles/globalStyle';
+import { Container, LoadingIcon } from '../../../styles/globalStyle';
 import { getTagById } from '../../../services/Tag/TagService';
+
+//others
 import RouteNames from '../../../navigation/RouteNames';
 
 export default function Home({ route, navigation }) {
+  const [isLoadingPage, setIsLoadingPage] = useState(false);
   const [posts, setPosts] = useState([]);
-
-  console.log('Home, route: ');
-  console.log(route);
 
   useEffect(() => {
     let _posts;
@@ -76,7 +78,6 @@ export default function Home({ route, navigation }) {
 
       //getting tags remotely by id
       for (let tagId of tags.keys()) {
-        console.log(tagId);
         const response = await getTagById(tagId);
         tags.set(tagId, response.data.name);
       }
@@ -90,15 +91,15 @@ export default function Home({ route, navigation }) {
 
     async function validatePosts() {
       filterPostsWithNeededInfo();
-
       await validateImagesRemotely();
       filterPostsWithImage();
-
       await validateTagsRemotely();
+      setIsLoadingPage(false);
 
       setPosts(_posts.reverse());
     }
 
+    setIsLoadingPage(true);
     if (route.params !== undefined) {
       _posts = route.params.posts;
       validatePosts();
@@ -119,30 +120,46 @@ export default function Home({ route, navigation }) {
     navigation.openDrawer();
   }
 
+  async function logoutHandler() {
+    await logout();
+    console.log('[NAVEGAÇÃO] Navegando para ' + RouteNames.PRELOAD);
+    navigation.dispatch(StackActions.replace(RouteNames.PRELOAD));
+  }
+
   return (
     <Container center={false}>
       <StatusBar backgroundColor="#000" />
-      <Header onPress={openMenu} title="Studium" materialIcon="menu" />
+      <Header
+        title="Studium"
+        leftButtonOnPress={openMenu}
+        leftButtonIcon="menu"
+        rightButtonIcon="exit-to-app"
+        rightButtonOnPress={logoutHandler}
+      />
       {/* Precisa aplicar uma condição para ajustar as tags do post.
             Caso for muito grande, exibir somente o que couber na linha */}
-      <FlatList
-        data={posts}
-        keyExtractor={(post) => post.id}
-        showsVerticalScrollIndicator={false}
-        renderItem={({ item }) => {
-          return (
-            <View>
-              <TouchableOpacity
-                onPress={navigateToPostDetail}
-                activeOpacity={1}
-              >
-                <Post data={item} />
-              </TouchableOpacity>
-              <Divider />
-            </View>
-          );
-        }}
-      />
+      {isLoadingPage ? (
+        <LoadingIcon size="large" color="#000000" />
+      ) : (
+        <FlatList
+          data={posts}
+          keyExtractor={(post) => post.id}
+          showsVerticalScrollIndicator={false}
+          renderItem={({ item }) => {
+            return (
+              <View>
+                <TouchableOpacity
+                  onPress={navigateToPostDetail}
+                  activeOpacity={1}
+                >
+                  <Post data={item} />
+                </TouchableOpacity>
+                <Divider />
+              </View>
+            );
+          }}
+        />
+      )}
     </Container>
   );
 }

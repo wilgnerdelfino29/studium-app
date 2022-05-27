@@ -72,9 +72,9 @@ export default function PostCreation({ navigation }) {
     <Container center={false}>
       <StatusBar backgroundColor="#000" />
       <Header
-        onPress={navigateBack}
         title="Studium"
-        materialIcon="keyboard-backspace"
+        leftButtonOnPress={navigateBack}
+        leftButtonIcon="keyboard-backspace"
       />
 
       <PostCreationContainer>

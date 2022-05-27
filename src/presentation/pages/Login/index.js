@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
+import { StackActions } from '@react-navigation/native';
 
 //services
 import { login } from '../../../services/Auth/AuthService';
 
 //components
 import Field from '../../components/Field';
-import StudiumLogo from '../../../assets/logo.png';
 import Divider from '../../components/Divider';
 
 //styles
@@ -14,6 +14,7 @@ import {
   InputArea,
   CustomButton,
   CustomButtonText,
+  LoadingIcon,
 } from '../../../styles/globalStyle';
 import {
   Logo,
@@ -23,9 +24,11 @@ import {
 } from './styles';
 
 //others
+import StudiumLogo from '../../../assets/logo.png';
 import RouteNames from '../../../navigation/RouteNames';
 
 export default function Login({ navigation }) {
+  const [isLoadingPage, setIsLoadingPage] = useState(false);
   const [usernameField, setUsernameField] = useState('');
   const [passwordField, setPasswordField] = useState('');
 
@@ -51,6 +54,7 @@ export default function Login({ navigation }) {
     if (!fieldsAreValids()) {
       return;
     }
+    setIsLoadingPage(true);
     const hasSuccess = await login(usernameField, passwordField);
     if (hasSuccess) {
       console.log(
@@ -60,10 +64,13 @@ export default function Login({ navigation }) {
       );
       console.log(hasSuccess.data);
 
-      navigation.navigate(RouteNames.MAIN_DRAWER, {
-        posts: hasSuccess.data,
-      });
+      navigation.dispatch(
+        StackActions.replace(RouteNames.MAIN_DRAWER, {
+          posts: hasSuccess.data,
+        })
+      );
     }
+    setIsLoadingPage(false);
   };
 
   const handleSignUpButtonClick = () => {
@@ -73,35 +80,38 @@ export default function Login({ navigation }) {
 
   return (
     <Container center={true}>
-      <Logo source={StudiumLogo} />
-      <InputArea>
-        <Field
-          iconName={'user'}
-          placeholder="Digite seu nome de usuário"
-          value={usernameField}
-          onChangeText={(t) => setUsernameField(t)}
-          valid={isUsernameFieldValid}
-        />
-        <Divider />
-        <Field
-          iconName={'lock'}
-          placeholder="Digite sua senha"
-          value={passwordField}
-          onChangeText={(t) => setPasswordField(t)}
-          password={true}
-          valid={isPasswordFieldValid}
-        />
-        <Divider />
-        <CustomButton onPress={handleLoginButtonClick}>
-          <CustomButtonText>LOGIN</CustomButtonText>
-        </CustomButton>
-        <SignMessageButton onPress={handleSignUpButtonClick}>
-          <SignMessageButtonText>
-            Ainda não possui uma conta?
-          </SignMessageButtonText>
-          <SignMessageButtonTextBold>Cadastre-se</SignMessageButtonTextBold>
-        </SignMessageButton>
-      </InputArea>
+      {!isLoadingPage && <Logo source={StudiumLogo} />}
+      {isLoadingPage && <LoadingIcon size="large" color="#000000" />}
+      {!isLoadingPage && (
+        <InputArea>
+          <Field
+            iconName={'user'}
+            placeholder="Digite seu nome de usuário"
+            value={usernameField}
+            onChangeText={(t) => setUsernameField(t)}
+            valid={isUsernameFieldValid}
+          />
+          <Divider />
+          <Field
+            iconName={'lock'}
+            placeholder="Digite sua senha"
+            value={passwordField}
+            onChangeText={(t) => setPasswordField(t)}
+            password={true}
+            valid={isPasswordFieldValid}
+          />
+          <Divider />
+          <CustomButton onPress={handleLoginButtonClick}>
+            <CustomButtonText>LOGIN</CustomButtonText>
+          </CustomButton>
+          <SignMessageButton onPress={handleSignUpButtonClick}>
+            <SignMessageButtonText>
+              Ainda não possui uma conta?
+            </SignMessageButtonText>
+            <SignMessageButtonTextBold>Cadastre-se</SignMessageButtonTextBold>
+          </SignMessageButton>
+        </InputArea>
+      )}
     </Container>
   );
 }

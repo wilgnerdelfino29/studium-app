@@ -20,20 +20,38 @@ const HeaderText = styled.Text`
   font-weight: bold;
 `;
 
-const MenuButton = styled.View`
+const LeftButton = styled.View`
   position: absolute;
   left: 10px;
 `;
 
-export default ({ onPress, title, materialIcon }) => {
+const RightButton = styled.View`
+  position: absolute;
+  right: 10px;
+`;
+
+export default ({
+  title,
+  leftButtonOnPress,
+  leftButtonIcon,
+  rightButtonOnPress,
+  rightButtonIcon,
+}) => {
   return (
     <Header>
-      <HeaderText>{title}</HeaderText>
-      <MenuButton>
-        <TouchableOpacity onPress={onPress} activeOpacity={1}>
-          <MaterialIcons name={materialIcon} color="#FFF" size={40} />
+      <LeftButton>
+        <TouchableOpacity onPress={leftButtonOnPress} activeOpacity={1}>
+          <MaterialIcons name={leftButtonIcon} color="#FFF" size={40} />
         </TouchableOpacity>
-      </MenuButton>
+      </LeftButton>
+
+      <HeaderText>{title}</HeaderText>
+
+      <RightButton>
+        <TouchableOpacity onPress={rightButtonOnPress} activeOpacity={1}>
+          <MaterialIcons name={rightButtonIcon} color="#FFF" size={40} />
+        </TouchableOpacity>
+      </RightButton>
     </Header>
   );
 };
