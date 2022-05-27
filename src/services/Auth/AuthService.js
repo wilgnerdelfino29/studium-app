@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { customAxios } from '../config';
+import { customAxios, basicAxios } from '../config';
 
 export const login = async (username, password) => {
   let hasSuccess = false;
@@ -30,16 +30,13 @@ export const login = async (username, password) => {
 };
 
 export const logout = async () => {
-  axios
-    .post('api-auth/logout/')
-    .then(async function (response) {
-      // handle success
+  await AsyncStorage.multiRemove(['username', 'password'])
+    .then((response) => {
       console.log('logout success');
+      console.log(response);
     })
-    .catch(function (error) {
-      // handle error
+    .catch((error) => {
       console.log('logout error');
+      console.log(error);
     });
-
-  await AsyncStorage.multiRemove(['username', 'password']);
 };
