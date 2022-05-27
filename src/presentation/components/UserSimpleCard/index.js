@@ -55,7 +55,7 @@ export default ({
           <UserInfo>
             <ImageSection>
               {userImageUrl === '' ? (
-                <FontAwesome name="user-circle" size={48} color="black" />
+                <FontAwesome name="user-circle" size={48} color="#4f4f4f" />
               ) : (
                 <UserImage source={userImageExample} />
               )}

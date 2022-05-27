@@ -110,9 +110,11 @@ export default function Home({ route, navigation }) {
     }
   }, []);
 
-  function navigateToPostDetail() {
+  function navigateToPostDetail(post) {
     console.log('[NAVEGAÇÃO] Navegando para ' + RouteNames.POST_DETAIL);
-    navigation.navigate(RouteNames.POST_DETAIL);
+    navigation.navigate(RouteNames.POST_DETAIL, {
+      post: post,
+    });
   }
 
   function openMenu() {
@@ -149,7 +151,7 @@ export default function Home({ route, navigation }) {
             return (
               <View>
                 <TouchableOpacity
-                  onPress={navigateToPostDetail}
+                  onPress={() => navigateToPostDetail(item)}
                   activeOpacity={1}
                 >
                   <Post data={item} />

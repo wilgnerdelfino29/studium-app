@@ -17,7 +17,6 @@ export default function Preload({ navigation }) {
         .then((response) => {
           if (response.at(0).at(1) !== null && response.at(1).at(1) !== null) {
             console.log('user info found');
-            console.log(response);
             navigation.dispatch(StackActions.replace(RouteNames.MAIN_DRAWER));
           } else {
             console.log('user info not found');

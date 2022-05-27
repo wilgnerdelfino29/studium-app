@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -9,8 +9,7 @@ import {
 import { AntDesign } from '@expo/vector-icons';
 import defaultPostImage from '../../../assets/postImageExample.jpg';
 
-import { getRoundedStat } from '../../constants/StringFormat';
-
+//components
 import Header from '../../components/Header';
 import Divider from '../../components/Divider';
 import UserSimpleCard from '../../components/UserSimpleCard';
@@ -20,7 +19,7 @@ import PostHeader from '../../components/PostHeader';
 import PostImage from '../../components/PostImage';
 import PostTags from '../../components/PostTags';
 
-import { Container } from '../../../styles/globalStyle';
+//styles
 import {
   PostDetailsContainer,
   ActionsSection,
@@ -28,10 +27,34 @@ import {
   ActionText,
   ReportText,
 } from './styles';
+import { Container, LoadingIcon } from '../../../styles/globalStyle';
 
-export default function PostDetail({ navigation }) {
+//others
+import { toPostCreationDateFormat } from '../../constants/StringFormat/index';
+import { getRoundedStat } from '../../constants/StringFormat';
+
+export default function PostDetail({ route, navigation }) {
+  const [post, setPost] = useState();
+  const [isLoadingPage, setIsLoadingPage] = useState(true);
   const [like, setLike] = useState(false);
   const [commentField, setCommentField] = useState('');
+
+  useEffect(() => {
+    let _post;
+    console.log(route);
+
+    async function validatePost() {
+      setPost(_post);
+      setIsLoadingPage(false);
+    }
+
+    if (route.params !== undefined) {
+      _post = route.params.post;
+      validatePost();
+    } else {
+      console.log('[ERRO] PostDetail não recebeu o parâmetro post');
+    }
+  }, []);
 
   function navigateBack() {
     if (navigation.canGoBack()) {
@@ -56,9 +79,6 @@ export default function PostDetail({ navigation }) {
     console.log('[AÇÃO DO USUÁRIO]' + 'Tocou em reportar');
   }
 
-  const randomText =
-    'Lorem ipsum dolor sit amet consectetur, adipiscing elit at netus lobortis, conubia maecenas semper tristique. Suspendisse ac ultrices facilisi purus commodo interdum sociosqu in blandit lacus curae magna, vehicula tempus nisl felis netus ut semper eleifend sollicitudin quisque. Consequat malesuada viverra adipiscing interdum dui nostra mi ipsum, tincidunt efficitur hendrerit sit aliquet tellus.Lorem ipsum dolor sit amet consectetur, adipiscing elit at netus lobortis, conubia maecenas semper tristique. Suspendisse ac ultrices facilisi purus commodo interdum sociosqu in blandit lacus curae magna, vehicula tempus nisl felis netus ut semper eleifend sollicitudin quisque. Consequat malesuada viverra adipiscing interdum dui nostra mi ipsum, tincidunt efficitur hendrerit sit aliquet tellus.Lorem ipsum dolor sit amet consectetur, adipiscing elit at netus lobortis, conubia maecenas semper tristique. Suspendisse ac ultrices facilisi purus commodo interdum sociosqu in blandit lacus curae magna, vehicula tempus nisl felis netus ut semper eleifend sollicitudin quisque. Consequat malesuada viverra adipiscing interdum dui nostra mi ipsum, tincidunt efficitur hendrerit sit aliquet tellus.';
-
   return (
     <Container center={false}>
       <StatusBar backgroundColor="#000" />
@@ -70,87 +90,91 @@ export default function PostDetail({ navigation }) {
 
       {/* Precisa aplicar uma condição para ajustar as tags do post.
             Caso for muito grande, exibir somente o que couber na linha */}
-
-      <ScrollView>
-        <PostImage source={defaultPostImage} />
-        <PostTags />
-        <PostDetailsContainer>
-          {/* autor */}
-          <UserSimpleCard
-            onPress={() => {}}
-            userImageUrl="asd"
-            userName="Wilgner Ferreira Delfino"
-            userLevel="10"
-          />
-          <Divider />
-
-          <Card
-            child={
-              <View>
-                <PostHeader
-                  title={'Criando um app do zero com React Native para Android'}
-                  date={'23/09/2020'}
-                />
-                <Divider />
-                <Text style={{ color: '#4f4f4f' }}>{randomText}</Text>
-              </View>
-            }
-          />
-          <Divider />
-
-          {/* interações */}
-          <Card
-            child={
-              <ActionsSection>
-                {/* curtir */}
-                <TouchableOpacity
-                  onPress={touchLikeButton}
-                  style={{ justifyContent: 'center' }}
-                >
-                  <ActionSection>
-                    {like ? (
-                      <AntDesign name="heart" size={24} color={'#f00'} />
-                    ) : (
-                      <AntDesign name="hearto" size={24} color={'#000'} />
-                    )}
-                    <ActionText>{getRoundedStat(130)}</ActionText>
-                  </ActionSection>
-                </TouchableOpacity>
-                <View style={{ width: 30 }} />
-                {/* comentar */}
-                <TouchableOpacity
-                  onPress={touchCommentButton}
-                  style={{ justifyContent: 'center' }}
-                >
-                  <ActionSection>
-                    <AntDesign name="message1" size={24} />
-                    <ActionText>{getRoundedStat(130)}</ActionText>
-                  </ActionSection>
-                </TouchableOpacity>
-              </ActionsSection>
-            }
-          />
-          <Divider />
-          {/* Denunciar */}
-          <View
-            style={{
-              flex: 1,
-              flexDirection: 'row',
-            }}
-          >
-            <View style={{ flex: 1 }} />
-            <Card
-              onPress={touchReportButton}
-              child={<ReportText>Denunciar postagem</ReportText>}
+      {isLoadingPage && <LoadingIcon />}
+      {!isLoadingPage && (
+        <ScrollView>
+          <PostImage source={post.images} isUri={true} />
+          <PostTags tags={post.categories} />
+          <PostDetailsContainer>
+            {/* autor */}
+            <UserSimpleCard
+              onPress={() => {}}
+              userName={post.owner}
+              userLevel="10"
             />
-          </View>
-          <Divider />
-        </PostDetailsContainer>
+            <Divider />
 
-        {/* Colocá-la em outra página que deve ser aberta no touchCommentButton() */}
-        {/* Seção de comentários */}
+            <Card
+              child={
+                <View>
+                  <PostHeader
+                    title={post.title}
+                    date={toPostCreationDateFormat(post.created)}
+                  />
+                  <Divider />
+                  <Text style={{ color: '#4f4f4f' }}>{post.body}</Text>
+                </View>
+              }
+            />
+            <Divider />
 
-        {/* <View style={styles.postInfoContainer}>
+            {/* interações */}
+            <Card
+              child={
+                <ActionsSection>
+                  {/* curtir */}
+                  <TouchableOpacity
+                    onPress={touchLikeButton}
+                    style={{ justifyContent: 'center' }}
+                  >
+                    <ActionSection>
+                      {like ? (
+                        <AntDesign name="heart" size={24} color={'#f00'} />
+                      ) : (
+                        <AntDesign name="hearto" size={24} color={'#000'} />
+                      )}
+                      <ActionText>
+                        {getRoundedStat(post.likes.length + (like ? 1 : 0))}
+                      </ActionText>
+                    </ActionSection>
+                  </TouchableOpacity>
+                  <View style={{ width: 30 }} />
+                  {/* comentar */}
+                  <TouchableOpacity
+                    onPress={touchCommentButton}
+                    style={{ justifyContent: 'center' }}
+                  >
+                    <ActionSection>
+                      <AntDesign name="message1" size={24} />
+                      <ActionText>
+                        {getRoundedStat(post.comments.length)}
+                      </ActionText>
+                    </ActionSection>
+                  </TouchableOpacity>
+                </ActionsSection>
+              }
+            />
+            <Divider />
+            {/* Denunciar */}
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'row',
+              }}
+            >
+              <View style={{ flex: 1 }} />
+              <Card
+                onPress={touchReportButton}
+                child={<ReportText>Denunciar postagem</ReportText>}
+              />
+            </View>
+            <Divider />
+          </PostDetailsContainer>
+
+          {/* Colocá-la em outra página que deve ser aberta no touchCommentButton() */}
+          {/* Seção de comentários */}
+
+          {/* <View style={styles.postInfoContainer}>
                     <Text style={styles.postCommentsHeaderText}>
                         Comentários
                     </Text>
@@ -176,7 +200,8 @@ export default function PostDetail({ navigation }) {
                         />
                     </View>
                 </View> */}
-      </ScrollView>
+        </ScrollView>
+      )}
     </Container>
   );
 }

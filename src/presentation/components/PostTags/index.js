@@ -8,7 +8,7 @@ export default ({ tags }) => {
     hasTags && (
       <PostTags>
         <AntDesign name="tagso" color="#4f4f4f" size={30} />
-        <PostTagsText>{tags}</PostTagsText>
+        <PostTagsText>{tags.join(', ')}</PostTagsText>
       </PostTags>
     )
   );
