@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { StackActions } from '@react-navigation/native';
 
 //services
 import { createUser } from '../../../services/User/UserService';

@@ -15,7 +15,7 @@ export default function Preload({ navigation }) {
     const checkUserInfo = async () => {
       await AsyncStorage.multiGet(['username', 'password'])
         .then((response) => {
-          if (response.at(0).at(1) !== null && response.at(1).at(1) !== null) {
+          if (response[0][1] !== null && response[1][1] !== null) {
             console.log('user info found');
             navigation.dispatch(StackActions.replace(RouteNames.MAIN_DRAWER));
           } else {

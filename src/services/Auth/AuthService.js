@@ -33,7 +33,6 @@ export const logout = async () => {
   await AsyncStorage.multiRemove(['username', 'password'])
     .then((response) => {
       console.log('logout success');
-      console.log(response);
     })
     .catch((error) => {
       console.log('logout error');
