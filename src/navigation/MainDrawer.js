@@ -11,7 +11,18 @@ const Drawer = createDrawerNavigator();
 
 export default () => {
   return (
-    <Drawer.Navigator initialRouteName={RouteNames.HOME}>
+    <Drawer.Navigator
+      drawerContentOptions={{
+        style: {
+          backgroundColor: '#fff',
+        },
+        activeBackgroundColor: '#000',
+        activeTintColor: '#FFF',
+        inactiveTintColor: '#000',
+        itemStyle: { marginVertical: 5 },
+      }}
+      initialRouteName={RouteNames.HOME}
+    >
       <Drawer.Screen name={RouteNames.HOME} component={HomeStack} />
       <Drawer.Screen name={RouteNames.POST_CREATION} component={PostCreation} />
       <Drawer.Screen name={RouteNames.PERFIL} component={Perfil} />

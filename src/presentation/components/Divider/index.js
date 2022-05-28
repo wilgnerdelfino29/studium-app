@@ -3,11 +3,11 @@ import styled from 'styled-components/native';
 
 export const Divider = styled.View`
   width: 100%;
-  height: 15px;
+  height: 10px;
 `;
 
 export const DividerH = styled.View`
-  width: 15px;
+  width: 10px;
   height: 100%;
 `;
 
