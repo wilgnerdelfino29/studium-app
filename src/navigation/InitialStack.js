@@ -8,7 +8,7 @@ import Preload from '../presentation/pages/Preload';
 import Login from '../presentation/pages/Login';
 import SignUp from '../presentation/pages/SignUp';
 import MainDrawer from './MainDrawer';
-import RouteNames from './RouteNames';
+import RouteNames from './constants/RouteNames';
 
 const Stack = createStackNavigator();
 

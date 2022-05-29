@@ -25,7 +25,7 @@ import {
 
 //others
 import StudiumLogo from '../../../assets/logo.png';
-import RouteNames from '../../../navigation/RouteNames';
+import RouteNames from '../../../navigation/constants/RouteNames';
 
 export default function Login({ navigation }) {
   const [isLoadingPage, setIsLoadingPage] = useState(false);

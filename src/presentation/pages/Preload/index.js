@@ -8,7 +8,7 @@ import { Logo } from './styles';
 
 //others
 import StudiumLogo from '../../../assets/logo.png';
-import RouteNames from '../../../navigation/RouteNames';
+import RouteNames from '../../../navigation/constants/RouteNames';
 
 export default function Preload({ navigation }) {
   useEffect(() => {

@@ -5,7 +5,7 @@ import HomeStack from './HomeStack';
 import Perfil from '../presentation/pages/Perfil';
 import Ranking from '../presentation/pages/Ranking';
 
-import RouteNames from './RouteNames';
+import RouteNames from './constants/RouteNames';
 import LogoutHandler from './utils/LogoutHandler';
 
 const Drawer = createDrawerNavigator();

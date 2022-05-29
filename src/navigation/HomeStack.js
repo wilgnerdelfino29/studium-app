@@ -7,7 +7,7 @@ import {
 import Home from '../presentation/pages/Home';
 import PostCreation from '../presentation/pages/PostCreation';
 import PostDetail from '../presentation/pages/PostDetail';
-import RouteNames from './RouteNames';
+import RouteNames from './constants/RouteNames';
 
 const HomeStack = createStackNavigator();
 

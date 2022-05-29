@@ -15,7 +15,7 @@ import { Container, LoadingIcon } from '../../../styles/globalStyle';
 import { getTagById } from '../../../services/Tag/TagService';
 
 //others
-import RouteNames from '../../../navigation/RouteNames';
+import RouteNames from '../../../navigation/constants/RouteNames';
 import { openMenu } from '../../../navigation/utils/CommonActions';
 
 export default function Home({ route, navigation }) {

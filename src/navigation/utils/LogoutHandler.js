@@ -4,7 +4,7 @@ import { StackActions } from '@react-navigation/native';
 
 import { logout } from '../../services/Auth/AuthService';
 
-import RouteNames from '../RouteNames';
+import RouteNames from '../constants/RouteNames';
 
 export default ({ navigation }) => {
   useEffect(() => {

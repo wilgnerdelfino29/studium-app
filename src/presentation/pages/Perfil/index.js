@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text } from 'react-native';
-import RouteNames from '../../../navigation/RouteNames';
+import RouteNames from '../../../navigation/constants/RouteNames';
 import { Container } from '../../../styles/globalStyle';
 
 export default function Perfil() {
