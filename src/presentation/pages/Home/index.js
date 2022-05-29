@@ -16,6 +16,7 @@ import { getTagById } from '../../../services/Tag/TagService';
 
 //others
 import RouteNames from '../../../navigation/RouteNames';
+import { openMenu } from '../../../navigation/utils/CommonActions';
 
 export default function Home({ route, navigation }) {
   const [isLoadingPage, setIsLoadingPage] = useState(false);
@@ -115,11 +116,6 @@ export default function Home({ route, navigation }) {
     });
   }
 
-  function openMenu() {
-    console.log('[NAVEGAÇÃO] Abrindo Drawer (Menu)');
-    navigation.openDrawer();
-  }
-
   function createPostHandler() {
     console.log('[NAVEGAÇÃO] Navegando para ' + RouteNames.POST_CREATION);
     navigation.navigate(RouteNames.POST_CREATION);
@@ -130,7 +126,7 @@ export default function Home({ route, navigation }) {
       <StatusBar backgroundColor="#000" />
       <Header
         title="Studium"
-        leftButtonOnPress={openMenu}
+        leftButtonOnPress={() => openMenu(navigation)}
         leftButtonIcon="menu"
         rightButtonIcon="add"
         rightButtonOnPress={createPostHandler}
