@@ -6,7 +6,7 @@ export default RouteNames = {
   HOME_STACK: 'HomeStack',
   HOME: 'Home',
   POST_DETAIL: 'PostDetail',
-  POST_CREATION: 'Criar Post',
+  POST_CREATION: 'PostCreation',
   PERFIL: 'Perfil',
   RANKING: 'Ranking',
 };

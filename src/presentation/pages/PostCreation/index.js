@@ -26,6 +26,9 @@ import {
   CustomButtonText,
 } from './styles';
 
+//others
+import { navigateBack } from '../../../navigation/utils/CommonActions';
+
 export default function PostCreation({ navigation }) {
   const [titleField, setTitleField] = useState('');
   const [contentField, setContentField] = useState('');
@@ -35,12 +38,6 @@ export default function PostCreation({ navigation }) {
 
   const windowWidth = Dimensions.get('window').width;
 
-  function navigateBack() {
-    if (navigation.canGoBack()) {
-      console.log('[NAVEGAÇÃO]' + 'Retornando a partir de PostCreation');
-      navigation.goBack();
-    }
-  }
   const getImageFromLibrary = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -72,7 +69,7 @@ export default function PostCreation({ navigation }) {
       <StatusBar backgroundColor="#000" />
       <Header
         title="Studium"
-        leftButtonOnPress={navigateBack}
+        leftButtonOnPress={() => navigateBack(navigation)}
         leftButtonIcon="keyboard-backspace"
       />
 

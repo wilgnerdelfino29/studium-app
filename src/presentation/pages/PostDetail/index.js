@@ -32,6 +32,7 @@ import { Container, LoadingIcon } from '../../../styles/globalStyle';
 //others
 import { toPostCreationDateFormat } from '../../constants/StringFormat/index';
 import { getRoundedStat } from '../../constants/StringFormat';
+import { navigateBack } from '../../../navigation/utils/CommonActions';
 
 export default function PostDetail({ route, navigation }) {
   const [post, setPost] = useState();
@@ -56,13 +57,6 @@ export default function PostDetail({ route, navigation }) {
     }
   }, []);
 
-  function navigateBack() {
-    if (navigation.canGoBack()) {
-      console.log('[NAVEGAÇÃO]' + 'Retornando a partir de PostDetail');
-      navigation.goBack();
-    }
-  }
-
   function touchLikeButton() {
     like
       ? console.log('[AÇÃO DO USUÁRIO]' + 'Descurtido')
@@ -84,7 +78,7 @@ export default function PostDetail({ route, navigation }) {
       <StatusBar backgroundColor="#000" />
       <Header
         title="Studium"
-        leftButtonOnPress={navigateBack}
+        leftButtonOnPress={() => navigateBack(navigation)}
         leftButtonIcon="keyboard-backspace"
       />
 
