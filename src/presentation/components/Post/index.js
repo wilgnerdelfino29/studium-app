@@ -9,7 +9,7 @@ import PostTags from '../../components/PostTags';
 import { Post, Padding } from './styles';
 
 //others
-import { toPostCreationDateFormat } from '../../constants/StringFormat/index';
+import { toPostCreationDateFormat } from '../../constants/StringFormat';
 
 export default ({ data }) => {
   return (

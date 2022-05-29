@@ -30,8 +30,10 @@ import {
 import { Container, LoadingIcon } from '../../../styles/globalStyle';
 
 //others
-import { toPostCreationDateFormat } from '../../constants/StringFormat/index';
-import { getRoundedStat } from '../../constants/StringFormat';
+import {
+  getRoundedStat,
+  toPostCreationDateFormat,
+} from '../../constants/StringFormat';
 import { navigateBack } from '../../../navigation/utils/CommonActions';
 
 export default function PostDetail({ route, navigation }) {
