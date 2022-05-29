@@ -35,20 +35,12 @@ export default function PostCreation({ navigation }) {
 
   const windowWidth = Dimensions.get('window').width;
 
-  // Provavelmente vai voltar a ter a função de retorno caso o acesso a tela for pelo Header na Home
-  //
-  // function navigateBack() {
-  //   if (navigation.canGoBack()) {
-  //     console.log('[NAVEGAÇÃO]' + 'Retornando a partir de PostCreation');
-  //     navigation.goBack();
-  //   }
-  // }
-
-  function openMenu() {
-    console.log('[NAVEGAÇÃO] Abrindo Drawer (Menu)');
-    navigation.openDrawer();
+  function navigateBack() {
+    if (navigation.canGoBack()) {
+      console.log('[NAVEGAÇÃO]' + 'Retornando a partir de PostCreation');
+      navigation.goBack();
+    }
   }
-
   const getImageFromLibrary = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -80,8 +72,8 @@ export default function PostCreation({ navigation }) {
       <StatusBar backgroundColor="#000" />
       <Header
         title="Studium"
-        leftButtonOnPress={openMenu}
-        leftButtonIcon="menu"
+        leftButtonOnPress={navigateBack}
+        leftButtonIcon="keyboard-backspace"
       />
 
       <PostCreationContainer>

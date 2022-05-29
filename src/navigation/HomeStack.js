@@ -5,6 +5,7 @@ import {
 } from '@react-navigation/stack';
 
 import Home from '../presentation/pages/Home';
+import PostCreation from '../presentation/pages/PostCreation';
 import PostDetail from '../presentation/pages/PostDetail';
 import RouteNames from './RouteNames';
 
@@ -20,6 +21,10 @@ export default () => {
     >
       <HomeStack.Screen name={RouteNames.HOME} component={Home} />
       <HomeStack.Screen name={RouteNames.POST_DETAIL} component={PostDetail} />
+      <HomeStack.Screen
+        name={RouteNames.POST_CREATION}
+        component={PostCreation}
+      />
     </HomeStack.Navigator>
   );
 };

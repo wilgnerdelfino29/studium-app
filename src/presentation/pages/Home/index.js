@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, TouchableOpacity, View, StatusBar } from 'react-native';
-import { StackActions } from '@react-navigation/native';
 
 //services
 import { validateUri } from '../../../services/Uri/UriService';
 import { getPosts } from '../../../services/Post/PostService';
-import { logout } from '../../../services/Auth/AuthService';
 
 //components
 import Header from '../../components/Header';
@@ -122,10 +120,9 @@ export default function Home({ route, navigation }) {
     navigation.openDrawer();
   }
 
-  async function logoutHandler() {
-    await logout();
-    console.log('[NAVEGAÇÃO] Navegando para ' + RouteNames.PRELOAD);
-    navigation.dispatch(StackActions.replace(RouteNames.PRELOAD));
+  function createPostHandler() {
+    console.log('[NAVEGAÇÃO] Navegando para ' + RouteNames.POST_CREATION);
+    navigation.navigate(RouteNames.POST_CREATION);
   }
 
   return (
@@ -135,8 +132,8 @@ export default function Home({ route, navigation }) {
         title="Studium"
         leftButtonOnPress={openMenu}
         leftButtonIcon="menu"
-        rightButtonIcon="exit-to-app"
-        rightButtonOnPress={logoutHandler}
+        rightButtonIcon="add"
+        rightButtonOnPress={createPostHandler}
       />
       {/* Precisa aplicar uma condição para ajustar as tags do post.
             Caso for muito grande, exibir somente o que couber na linha */}
