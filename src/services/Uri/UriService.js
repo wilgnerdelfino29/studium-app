@@ -19,7 +19,6 @@ export const validateUri = async (uri) => {
     .catch(function (error) {
       // handle error
       console.log('validateUri error');
-      console.log(error);
     });
 
   return hasSuccess;
