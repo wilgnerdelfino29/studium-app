@@ -123,7 +123,7 @@ export default function Home({ route, navigation }) {
 
   return (
     <Container center={false}>
-      <StatusBar backgroundColor="#000" />
+      <StatusBar backgroundColor="#fff" barStyle="dark-content" />
       <Header
         title="Studium"
         leftButtonOnPress={() => openMenu(navigation)}
@@ -140,17 +140,17 @@ export default function Home({ route, navigation }) {
           data={posts}
           keyExtractor={(post) => post.id}
           showsVerticalScrollIndicator={false}
+          ListHeaderComponent={() => <Divider />}
+          ItemSeparatorComponent={() => <Divider />}
+          ListFooterComponent={() => <Divider />}
           renderItem={({ item }) => {
             return (
-              <View>
-                <TouchableOpacity
-                  onPress={() => navigateToPostDetail(item)}
-                  activeOpacity={1}
-                >
-                  <Post data={item} />
-                </TouchableOpacity>
-                <Divider />
-              </View>
+              <TouchableOpacity
+                onPress={() => navigateToPostDetail(item)}
+                activeOpacity={1}
+              >
+                <Post data={item} />
+              </TouchableOpacity>
             );
           }}
         />
