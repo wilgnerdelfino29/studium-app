@@ -42,7 +42,7 @@ export const createComment = async (comment, postId) => {
         .then(async function (response) {
           // handle success
           console.log('createComment success');
-          hasSuccess = response;
+          hasSuccess = response.data;
         })
         .catch(function (error) {
           // handle error

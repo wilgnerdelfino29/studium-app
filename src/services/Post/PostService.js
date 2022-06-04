@@ -1,4 +1,4 @@
-import { loggedAxios } from '../config';
+import { loggedAxios, basicAxios } from '../config';
 
 export const getPosts = async () => {
   let hasSuccess = false;
@@ -23,6 +23,25 @@ export const getPosts = async () => {
     .catch(function (error) {
       // handle error
       console.log('loggedAxios instance error');
+      console.log(error);
+    });
+
+  return hasSuccess;
+};
+
+export const getPostById = async (postId) => {
+  let hasSuccess = false;
+
+  await basicAxios()
+    .get('posts/' + postId)
+    .then(async function (response) {
+      // handle success
+      console.log('getPostById success');
+      hasSuccess = response.data;
+    })
+    .catch(function (error) {
+      // handle error
+      console.log('getPostById error');
       console.log(error);
     });
 
