@@ -14,7 +14,7 @@ export const InputArea = styled.View`
 
 export const CustomButton = styled.TouchableOpacity`
   background-color: #365fb7;
-  height: 60px;
+  height: 50px;
   border-radius: 10px;
   align-items: center;
   justify-content: center;
@@ -27,5 +27,5 @@ export const CustomButtonText = styled.Text`
 `;
 
 export const LoadingIcon = styled.ActivityIndicator`
-  margin-top: 50px;
+  margin-top: ${(props) => props.margin ?? '50px'};
 `;

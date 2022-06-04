@@ -66,7 +66,7 @@ export default function PostCreation({ navigation }) {
 
   return (
     <Container center={false}>
-      <StatusBar backgroundColor="#000" />
+      <StatusBar backgroundColor="#fff" barStyle="dark-content" />
       <Header
         title="Studium"
         leftButtonOnPress={() => navigateBack(navigation)}

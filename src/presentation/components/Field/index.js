@@ -5,11 +5,11 @@ import { AntDesign } from '@expo/vector-icons';
 const Field = styled.View`
   width: 100%;
   flex: 1;
-  padding-left: 15px;
-  padding-right: 15px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  min-height: ${(props) => (props.multiline ? 200 : 60)}px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  min-height: ${(props) => (props.multiline ? 200 : 50)}px;
   border-radius: 10px;
   flex-direction: row;
   align-items: center;

@@ -11,12 +11,14 @@ const Header = styled.View`
   align-items: center;
   padding-bottom: 5px;
   padding-left: 10px;
-  background-color: black;
+  background-color: #fff;
+  border-bottom-width: 0.2px;
+  border-bottom-color: #4f4f4f;
 `;
 
 const HeaderText = styled.Text`
   font-size: 30px;
-  color: white;
+  color: #4f4f4f;
   font-weight: bold;
 `;
 
@@ -41,15 +43,14 @@ export default ({
     <Header>
       <LeftButton>
         <TouchableOpacity onPress={leftButtonOnPress} activeOpacity={1}>
-          <MaterialIcons name={leftButtonIcon} color="#FFF" size={40} />
+          <MaterialIcons name={leftButtonIcon} color="#4f4f4f" size={40} />
         </TouchableOpacity>
       </LeftButton>
-
       <HeaderText>{title}</HeaderText>
 
       <RightButton>
         <TouchableOpacity onPress={rightButtonOnPress} activeOpacity={1}>
-          <MaterialIcons name={rightButtonIcon} color="#FFF" size={40} />
+          <MaterialIcons name={rightButtonIcon} color="#4f4f4f" size={40} />
         </TouchableOpacity>
       </RightButton>
     </Header>
