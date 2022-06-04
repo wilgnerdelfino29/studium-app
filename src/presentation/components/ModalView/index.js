@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Dimensions } from 'react-native';
 import { Modalize } from 'react-native-modalize';
 
@@ -13,6 +13,7 @@ export default function ModalView({
   footerComponent,
   adjustToContentHeight = true,
 }) {
+  const contentRef = useRef(null);
   const MODAL_HEIGHT = height * 0.75;
 
   return (
@@ -26,15 +27,15 @@ export default function ModalView({
       HeaderComponent={headerComponent}
       FooterComponent={footerComponent}
       modalStyle={modalStyle}
+      contentRef={contentRef}
       flatListProps={{
         data: data,
         renderItem: renderItem,
         keyExtractor: (item) => item.id,
         showsVerticalScrollIndicator: false,
         onContentSizeChange: () => {
-          console.log('<<<');
-          console.log(modalizeRef);
           // this.scrollView.scrollToEnd({ animated: true });
+          contentRef.current.scrollToEnd({ animated: true });
         },
       }}
     />
