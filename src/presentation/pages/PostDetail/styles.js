@@ -2,7 +2,7 @@ import styled from 'styled-components/native';
 
 export const PostDetailsContainer = styled.View`
   background-color: #ddd;
-  padding: 15px;
+  padding: 10px;
 `;
 
 export const ActionsSection = styled.View`

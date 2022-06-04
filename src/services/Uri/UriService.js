@@ -20,6 +20,17 @@ export const validateUri = async (uri) => {
       // handle error
       console.log('validateUri error');
     });
-
   return hasSuccess;
+};
+
+export const validatePostsUris = async (posts) => {
+  return await Promise.all(
+    posts.map(async (post) => {
+      const imageIsValid = await validateUri(post.images);
+      if (!imageIsValid) {
+        post.images = '';
+      }
+      return post;
+    })
+  );
 };

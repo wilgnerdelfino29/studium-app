@@ -23,85 +23,17 @@ export default function Home({ route, navigation }) {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    let _posts;
-
     async function getPostsRemotely() {
-      const hasSuccess = await getPosts();
-      if (hasSuccess) {
-        _posts = hasSuccess.data;
-        validatePosts();
+      const posts = await getPosts();
+      if (posts) {
+        setIsLoadingPage(false);
+        setPosts(posts.reverse());
       }
-    }
-
-    function filterPostsWithNeededInfo() {
-      _posts = _posts.filter((post) => {
-        const hasTitle = post.title !== null && post.title !== '';
-        const hasBody = post.body !== null && post.body !== '';
-        const hasImage = post.images !== null && post.images !== '';
-        return hasTitle && hasBody && hasImage;
-      });
-    }
-
-    function filterPostsWithImage() {
-      _posts = _posts.filter(
-        (post) => post.images !== null && post.images !== ''
-      );
-    }
-
-    async function validateImagesRemotely() {
-      console.log('validating images');
-      _posts = await Promise.all(
-        _posts.map(async (post) => {
-          const imageIsValid = await validateUri(post.images);
-          if (!imageIsValid) {
-            post.images = '';
-          }
-          return post;
-        })
-      );
-    }
-
-    async function validateTagsRemotely() {
-      console.log('validating tags');
-
-      const tags = new Map();
-
-      //getting unique tag ids
-      _posts.forEach((post) =>
-        post.categories.forEach((category) => {
-          if (!tags.has(category)) {
-            tags.set(category, '');
-          }
-        })
-      );
-
-      //getting tags remotely by id
-      for (let tagId of tags.keys()) {
-        const response = await getTagById(tagId);
-        tags.set(tagId, response.data.name);
-      }
-
-      //returning posts with tags adjusted
-      _posts = _posts.map((post) => {
-        post.categories = post.categories.map((category) => tags.get(category));
-        return post;
-      });
-    }
-
-    async function validatePosts() {
-      filterPostsWithNeededInfo();
-      await validateImagesRemotely();
-      filterPostsWithImage();
-      await validateTagsRemotely();
-      setIsLoadingPage(false);
-
-      setPosts(_posts.reverse());
     }
 
     setIsLoadingPage(true);
     if (route.params !== undefined) {
-      _posts = route.params.posts;
-      validatePosts();
+      setPosts(route.params.posts);
       console.log('Recebeu posts por parâmetro');
     } else {
       getPostsRemotely();

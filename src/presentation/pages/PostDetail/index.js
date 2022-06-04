@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {
   View,
   Text,
@@ -7,17 +7,22 @@ import {
   StatusBar,
 } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
-import defaultPostImage from '../../../assets/postImageExample.jpg';
+
+//services
+import {
+  getComments,
+  createComment,
+} from '../../../services/Comment/CommentService';
 
 //components
 import Header from '../../components/Header';
 import Divider from '../../components/Divider';
 import UserSimpleCard from '../../components/UserSimpleCard';
-import Field from '../../components/Field';
 import Card from '../../components/Card';
 import PostHeader from '../../components/PostHeader';
 import PostImage from '../../components/PostImage';
 import PostTags from '../../components/PostTags';
+import PostCommentsModal from '../../components/PostCommentsModal';
 
 //styles
 import {
@@ -35,59 +40,99 @@ import {
   toPostCreationDateFormat,
 } from '../../constants/StringFormat';
 import { navigateBack } from '../../../navigation/utils/CommonActions';
+import { getPostById } from '../../../services/Post/PostService';
 
 export default function PostDetail({ route, navigation }) {
   const [post, setPost] = useState();
   const [isLoadingPage, setIsLoadingPage] = useState(true);
-  const [like, setLike] = useState(false);
-  const [commentField, setCommentField] = useState('');
+  const [isLoadingComments, setIsLoadingComments] = useState(false);
+  const [liked, setLiked] = useState(false);
+  const [comment, setComment] = useState('');
+  const modalizeRef = useRef(null);
 
   useEffect(() => {
-    let _post;
     console.log(route);
 
-    async function validatePost() {
-      setPost(_post);
-      setIsLoadingPage(false);
-    }
-
     if (route.params !== undefined) {
-      _post = route.params.post;
-      validatePost();
+      setPost(route.params.post);
+      setIsLoadingPage(false);
+      validatePost(route.params.post);
     } else {
       console.log('[ERRO] PostDetail não recebeu o parâmetro post');
     }
   }, []);
 
-  function touchLikeButton() {
-    like
-      ? console.log('[AÇÃO DO USUÁRIO]' + 'Descurtido')
-      : console.log('[AÇÃO DO USUÁRIO]' + 'Curtido');
-    setLike(!like);
+  async function validatePost(post) {
+    await getCommentsRemotely(post);
   }
 
-  function touchCommentButton() {
+  async function getCommentsRemotely(post) {
+    setIsLoadingComments(true);
+    if (postHasComments(post) && typeof post.comments[0] === 'number') {
+      const comments = await getComments(post.comments);
+      post.comments = comments;
+    }
+    setPost(post);
+    setIsLoadingComments(false);
+  }
+
+  function postHasComments(post) {
+    return (
+      typeof post !== 'undefined' &&
+      typeof post.comments !== 'undefined' &&
+      post.comments.length > 0
+    );
+  }
+
+  function touchLikeButton() {
+    liked
+      ? console.log('[AÇÃO DO USUÁRIO]' + 'Descurtido')
+      : console.log('[AÇÃO DO USUÁRIO]' + 'Curtido');
+    setLiked(!liked);
+  }
+
+  function touchSeeCommentsButton() {
     console.log('[AÇÃO DO USUÁRIO]' + 'Tocou em comentar');
-    //open comment field
+    //open comments modal
+    modalizeRef.current?.open();
   }
 
   function touchReportButton() {
     console.log('[AÇÃO DO USUÁRIO]' + 'Tocou em reportar');
   }
 
+  async function touchDoCommentButton() {
+    console.log('[AÇÃO DO USUÁRIO] ' + 'Tocou em enviar comentário');
+    if (comment !== '') {
+      setIsLoadingComments(true);
+      const createdComment = await createComment(comment, post.id);
+      if (createdComment) {
+        const updatedPost = await getPostById(post.id);
+        if (updatedPost) {
+          await validatePost(updatedPost);
+          setComment('');
+        } else {
+          setIsLoadingComments(false);
+        }
+      } else {
+        setIsLoadingComments(false);
+      }
+    }
+  }
+
   return (
     <Container center={false}>
-      <StatusBar backgroundColor="#000" />
+      <StatusBar backgroundColor="#fff" barStyle="dark-content" />
       <Header
-        title="Studium"
         leftButtonOnPress={() => navigateBack(navigation)}
         leftButtonIcon="keyboard-backspace"
       />
 
       {/* Precisa aplicar uma condição para ajustar as tags do post.
             Caso for muito grande, exibir somente o que couber na linha */}
-      {isLoadingPage && <LoadingIcon />}
-      {!isLoadingPage && (
+      {typeof post === 'undefined' || isLoadingPage ? (
+        <LoadingIcon size="large" color="#000000" />
+      ) : (
         <ScrollView>
           <PostImage source={post.images} isUri={true} />
           <PostTags tags={post.categories} />
@@ -115,42 +160,50 @@ export default function PostDetail({ route, navigation }) {
             <Divider />
 
             {/* interações */}
-            <Card
-              child={
-                <ActionsSection>
-                  {/* curtir */}
-                  <TouchableOpacity
-                    onPress={touchLikeButton}
-                    style={{ justifyContent: 'center' }}
-                  >
-                    <ActionSection>
-                      {like ? (
-                        <AntDesign name="heart" size={24} color={'#f00'} />
-                      ) : (
-                        <AntDesign name="hearto" size={24} color={'#000'} />
-                      )}
-                      <ActionText>
-                        {getRoundedStat(post.likes.length + (like ? 1 : 0))}
-                      </ActionText>
-                    </ActionSection>
-                  </TouchableOpacity>
-                  <View style={{ width: 30 }} />
-                  {/* comentar */}
-                  <TouchableOpacity
-                    onPress={touchCommentButton}
-                    style={{ justifyContent: 'center' }}
-                  >
-                    <ActionSection>
-                      <AntDesign name="message1" size={24} />
-                      <ActionText>
-                        {getRoundedStat(post.comments.length)}
-                      </ActionText>
-                    </ActionSection>
-                  </TouchableOpacity>
-                </ActionsSection>
-              }
-            />
-            <Divider />
+            {isLoadingComments ? (
+              <LoadingIcon size="large" color="#000000" margin={0} />
+            ) : (
+              <View>
+                <Card
+                  child={
+                    <ActionsSection>
+                      {/* curtir */}
+                      <TouchableOpacity
+                        onPress={touchLikeButton}
+                        style={{ justifyContent: 'center' }}
+                      >
+                        <ActionSection>
+                          {liked ? (
+                            <AntDesign name="heart" size={24} color={'#f00'} />
+                          ) : (
+                            <AntDesign name="hearto" size={24} color={'#000'} />
+                          )}
+                          <ActionText>
+                            {getRoundedStat(
+                              post.likes.length + (liked ? 1 : 0)
+                            )}
+                          </ActionText>
+                        </ActionSection>
+                      </TouchableOpacity>
+                      <View style={{ width: 30 }} />
+                      {/* comentar */}
+                      <TouchableOpacity
+                        onPress={touchSeeCommentsButton}
+                        style={{ justifyContent: 'center' }}
+                      >
+                        <ActionSection>
+                          <AntDesign name="message1" size={24} />
+                          <ActionText>
+                            {getRoundedStat(post.comments.length)}
+                          </ActionText>
+                        </ActionSection>
+                      </TouchableOpacity>
+                    </ActionsSection>
+                  }
+                />
+                <Divider />
+              </View>
+            )}
             {/* Denunciar */}
             <View
               style={{
@@ -164,40 +217,19 @@ export default function PostDetail({ route, navigation }) {
                 child={<ReportText>Denunciar postagem</ReportText>}
               />
             </View>
-            <Divider />
+            {/* <Divider /> */}
           </PostDetailsContainer>
-
-          {/* Colocá-la em outra página que deve ser aberta no touchCommentButton() */}
-          {/* Seção de comentários */}
-
-          {/* <View style={styles.postInfoContainer}>
-                    <Text style={styles.postCommentsHeaderText}>
-                        Comentários
-                    </Text>
-                    <View style={styles.postCommentsContainer}>
-                        <FlatList
-                            style={styles.postCommentsList}
-                            data={[1, 2, 3, 4, 5]}
-                            // Para o key extractor deve ser passado o id do post quando integrar com a API
-                            keyExtractor={comment => String(comment)}
-                            showsVerticalScrollIndicator={false}
-                            renderItem={() => (
-
-                                <View style={styles.commentContainer}>
-                                    <Text style={styles.commentAuthor}>
-                                        Zezinho
-                                    </Text>
-                                    <Text style={styles.commentText}>
-                                        Muito bacana o assunto, parabéns!
-                                    </Text>
-
-                                </View>
-                            )}
-                        />
-                    </View>
-                </View> */}
         </ScrollView>
       )}
+
+      <PostCommentsModal
+        modalizeRef={modalizeRef}
+        data={postHasComments(post) ? post.comments : []}
+        fieldValue={comment}
+        fieldOnChangeText={(t) => setComment(t)}
+        onPress={touchDoCommentButton}
+        isLoadingComments={isLoadingComments}
+      />
     </Container>
   );
 }
