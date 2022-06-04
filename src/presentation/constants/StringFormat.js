@@ -28,6 +28,7 @@ export function getStatString(value, text) {
 export function toPostCreationDateFormat(date) {
   //From 2022-02-17T02:54:22.342453Z
   //To 17/02/2022
+  if (typeof date === 'undefined') return '';
   const onlyDate = date.split('T')[0];
   return onlyDate.split('-').reverse().join('/');
 }
