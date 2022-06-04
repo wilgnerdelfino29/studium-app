@@ -13,7 +13,7 @@ export const login = async (username, password) => {
 
   if (hasSuccess) {
     console.log('login success');
-    return hasSuccess.data;
+    return hasSuccess;
   }
 
   console.log('login error');

@@ -62,11 +62,11 @@ export default function Login({ navigation }) {
           RouteNames.HOME +
           ', com o parâmetro posts:'
       );
-      console.log(hasSuccess.data);
+      console.log(hasSuccess);
 
       navigation.dispatch(
         StackActions.replace(RouteNames.MAIN_DRAWER, {
-          posts: hasSuccess.data,
+          posts: hasSuccess,
         })
       );
     }
