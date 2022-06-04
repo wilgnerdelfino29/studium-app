@@ -12,11 +12,9 @@ const baseURL = (username, password) => {
     password !== undefined;
 
   if (hasUsernameAndPassword) {
-    console.log('https://' + username + ':' + password + '@' + API_URL);
     return 'https://' + username + ':' + password + '@' + API_URL;
   }
 
-  console.log('https://' + API_URL);
   return 'https://' + API_URL;
 };
 
