@@ -1,32 +1,24 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { customAxios, basicAxios } from '../config';
+import { getPosts } from '../Post/PostService';
 
 export const login = async (username, password) => {
-  let hasSuccess = false;
+  await AsyncStorage.multiSet([
+    ['username', username],
+    ['password', password],
+  ]);
 
-  await customAxios(username, password)
-    .get('posts/', {
-      body: {
-        username: username,
-        password: password,
-      },
-    })
-    .then(async function (response) {
-      // handle success
-      console.log('login success');
-      await AsyncStorage.multiSet([
-        ['username', username],
-        ['password', password],
-      ]);
-      hasSuccess = response;
-    })
-    .catch(function (error) {
-      // handle error
-      console.log('login error');
-      console.log(error);
-    });
-  return hasSuccess;
+  console.log('trying to login');
+  const hasSuccess = await getPosts();
+
+  if (hasSuccess) {
+    console.log('login success');
+    return hasSuccess.data;
+  }
+
+  console.log('login error');
+  await AsyncStorage.multiRemove(['username', 'password']);
+  return false;
 };
 
 export const logout = async () => {
