@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { FlatList, TouchableOpacity, View, StatusBar } from 'react-native';
 
 //services
-import { validateUri } from '../../../services/Uri/UriService';
 import { getPosts } from '../../../services/Post/PostService';
 
 //components
@@ -12,7 +11,6 @@ import Divider from '../../components/Divider';
 
 //styles
 import { Container, LoadingIcon } from '../../../styles/globalStyle';
-import { getTagById } from '../../../services/Tag/TagService';
 
 //others
 import RouteNames from '../../../navigation/constants/RouteNames';

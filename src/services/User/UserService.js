@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { basicAxios } from '../config';
 
 export const createUser = async (username, email, password) => {
-  let hasSuccess = false;
+  let response = false;
 
   await basicAxios()
     .post('create/', {
@@ -11,20 +11,20 @@ export const createUser = async (username, email, password) => {
       email: email,
       password: password,
     })
-    .then(async function (response) {
+    .then(async function () {
       // handle success
       console.log('createUser success');
       await AsyncStorage.multiSet([
         ['username', username],
         ['password', password],
       ]);
-      hasSuccess = true;
+      response = true;
     })
     .catch(function (error) {
       // handle error
       console.log('createUser error');
-      console.log(error);
+      response = error.message;
     });
 
-  return hasSuccess;
+  return response;
 };

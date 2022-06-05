@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import { AntDesign } from '@expo/vector-icons';
+import { TextInput } from 'react-native';
 
 const Field = styled.View`
   width: 100%;
@@ -17,12 +18,13 @@ const Field = styled.View`
 `;
 
 const Input = styled.TextInput.attrs((props) => ({
-  placeholderTextColor: props.valid ? 'black' : 'red',
+  placeholderTextColor: props.valid ? 'gray' : 'red',
 }))`
   font-size: 16px;
   flex: 1;
   height: 100%;
-  color: ${(props) => (props.editable ? 'black' : '#ccc')};
+  color: ${(props) =>
+    props.editable ? (props.valid ? 'black' : 'red') : '#ccc'};
 `;
 
 export default ({
@@ -34,6 +36,8 @@ export default ({
   multiline = false,
   disabled = false,
   valid = true,
+  onEndEditing,
+  maxLength = 1000,
 }) => {
   const paddingValue = iconName !== '' ? 10 : 0;
   const textAlignVertical = multiline ? 'top' : 'center';
@@ -56,6 +60,8 @@ export default ({
         editable={!disabled}
         selectTextOnFocus={!disabled}
         valid={valid}
+        onEndEditing={onEndEditing}
+        maxLength={maxLength}
       />
     </Field>
   );
