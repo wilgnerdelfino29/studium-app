@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { basicAxios } from '../config';
+import { basicAxios, loggedAxios } from '../config';
 
 export const createUser = async (username, email, password) => {
   let response = false;
@@ -27,4 +27,33 @@ export const createUser = async (username, email, password) => {
     });
 
   return response;
+};
+
+export const getUsers = async () => {
+  let hasSuccess = false;
+
+  await loggedAxios()
+    .then(async function (axios) {
+      // handle success
+      console.log('loggedAxios instance success');
+      await axios
+        .get('users/')
+        .then(async function (response) {
+          // handle success
+          console.log('getUsers success');
+          hasSuccess = response.data;
+        })
+        .catch(function (error) {
+          // handle error
+          console.log('getUsers error');
+          console.log(error);
+        });
+    })
+    .catch(function (error) {
+      // handle error
+      console.log('loggedAxios instance error');
+      console.log(error);
+    });
+
+  return hasSuccess;
 };

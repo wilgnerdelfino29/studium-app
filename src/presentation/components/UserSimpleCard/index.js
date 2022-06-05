@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import { TouchableOpacity, Image, Text, View } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import userImageExample from '../../../assets/postImageExample.jpg';
 
@@ -63,7 +62,7 @@ export default ({
 
             <UserName numberOfLines={2}>{userName}</UserName>
 
-            {userLevel && (
+            {userLevel !== null && (
               <LevelSection>
                 <UserLevel>Nível {userLevel}</UserLevel>
               </LevelSection>

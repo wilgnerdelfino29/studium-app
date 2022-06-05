@@ -6,8 +6,8 @@ const Card = styled.View`
   align-items: center;
   background-color: white;
   border-radius: 6px;
-  padding-left: 15px;
-  padding-right: 15px;
+  padding-left: 10px;
+  padding-right: 10px;
   padding-top: 10px;
   padding-bottom: 10px;
 `;
@@ -17,8 +17,8 @@ const TouchableCard = styled.TouchableOpacity`
   align-items: center;
   background-color: white;
   border-radius: 6px;
-  padding-left: 15px;
-  padding-right: 15px;
+  padding-left: 10px;
+  padding-right: 10px;
   padding-top: 10px;
   padding-bottom: 10px;
 `;
