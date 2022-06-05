@@ -84,24 +84,7 @@ export default function PostDetail({ route, navigation }) {
     );
   }
 
-  function touchLikeButton() {
-    liked
-      ? console.log('[AÇÃO DO USUÁRIO]' + 'Descurtido')
-      : console.log('[AÇÃO DO USUÁRIO]' + 'Curtido');
-    setLiked(!liked);
-  }
-
-  function touchSeeCommentsButton() {
-    console.log('[AÇÃO DO USUÁRIO]' + 'Tocou em comentar');
-    //open comments modal
-    modalizeRef.current?.open();
-  }
-
-  function touchReportButton() {
-    console.log('[AÇÃO DO USUÁRIO]' + 'Tocou em reportar');
-  }
-
-  async function touchDoCommentButton() {
+  async function createCommentOnPress() {
     console.log('[AÇÃO DO USUÁRIO] ' + 'Tocou em enviar comentário');
     if (comment !== '') {
       setIsLoadingComments(true);
@@ -169,7 +152,12 @@ export default function PostDetail({ route, navigation }) {
                     <ActionsSection>
                       {/* curtir */}
                       <TouchableOpacity
-                        onPress={touchLikeButton}
+                        onPress={() => {
+                          liked
+                            ? console.log('[AÇÃO DO USUÁRIO]' + 'Descurtido')
+                            : console.log('[AÇÃO DO USUÁRIO]' + 'Curtido');
+                          setLiked(!liked);
+                        }}
                         style={{ justifyContent: 'center' }}
                       >
                         <ActionSection>
@@ -188,7 +176,12 @@ export default function PostDetail({ route, navigation }) {
                       <View style={{ width: 30 }} />
                       {/* comentar */}
                       <TouchableOpacity
-                        onPress={touchSeeCommentsButton}
+                        onPress={() => {
+                          console.log(
+                            '[AÇÃO DO USUÁRIO]' + 'Tocou em comentar'
+                          );
+                          modalizeRef.current?.open();
+                        }}
                         style={{ justifyContent: 'center' }}
                       >
                         <ActionSection>
@@ -213,7 +206,9 @@ export default function PostDetail({ route, navigation }) {
             >
               <View style={{ flex: 1 }} />
               <Card
-                onPress={touchReportButton}
+                onPress={() => {
+                  console.log('[AÇÃO DO USUÁRIO]' + 'Tocou em reportar');
+                }}
                 child={<ReportText>Denunciar postagem</ReportText>}
               />
             </View>
@@ -227,7 +222,7 @@ export default function PostDetail({ route, navigation }) {
         data={postHasComments(post) ? post.comments : []}
         fieldValue={comment}
         fieldOnChangeText={(t) => setComment(t)}
-        onPress={touchDoCommentButton}
+        onPress={createCommentOnPress}
         isLoadingComments={isLoadingComments}
       />
     </Container>
