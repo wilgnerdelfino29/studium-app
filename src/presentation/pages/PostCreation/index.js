@@ -68,7 +68,7 @@ export default function PostCreation({ navigation }) {
     <Container center={false}>
       <StatusBar backgroundColor="#fff" barStyle="dark-content" />
       <Header
-        title="Studium"
+        title="Criar Post"
         leftButtonOnPress={() => navigateBack(navigation)}
         leftButtonIcon="keyboard-backspace"
       />

@@ -17,7 +17,7 @@ const Header = styled.View`
 `;
 
 const HeaderText = styled.Text`
-  font-size: 30px;
+  font-size: 26px;
   color: #4f4f4f;
   font-weight: bold;
 `;
